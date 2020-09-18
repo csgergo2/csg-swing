@@ -5,35 +5,36 @@ import java.util.Objects;
 public class CsGHtmlBuilder {
 
     private final StringBuilder html = new StringBuilder();
-    private final StringBuilder bodyStyle = new StringBuilder();
-    private final boolean withHtmlTag;
-    private final boolean withBodyTag;
+    private final StringBuilder style = new StringBuilder();
 
+    private final String mainTag;
+
+    /**
+     * Default mainTag: {@code <body></body>}
+     */
     public CsGHtmlBuilder() {
-        this(false);
+        this("body");
     }
 
-    public CsGHtmlBuilder(final boolean withBodyTag) {
-        this(withBodyTag, withBodyTag);
+    /**
+     * @param mainTag like "body" or "table" (they becomes html tags like {@code <body></body>} or {@code <table></table>})
+     */
+    public CsGHtmlBuilder(String mainTag) {
+        this.mainTag = mainTag;
     }
 
-    public CsGHtmlBuilder(final boolean withHtmlTag, final boolean withBodyTag) {
-        this.withHtmlTag = withHtmlTag;
-        this.withBodyTag = withBodyTag;
-    }
-
-    public CsGHtmlBuilder addBodyStyle(String style, String value) {
-        bodyStyle.append(style).append(':').append(value).append(';');
+    public CsGHtmlBuilder addStyle(String style, String value) {
+        this.style.append(style).append(':').append(value).append(';');
         return this;
     }
 
-    public CsGHtmlBuilder addBodyStyle(String style, int value) {
-        bodyStyle.append(style).append(':').append(value).append(';');
+    public CsGHtmlBuilder addStyle(String style, int value) {
+        this.style.append(style).append(':').append(value).append(';');
         return this;
     }
 
-    public CsGHtmlBuilder addBodyStyle(String style, double value) {
-        bodyStyle.append(style).append(':').append(value).append(';');
+    public CsGHtmlBuilder addStyle(String style, double value) {
+        this.style.append(style).append(':').append(value).append(';');
         return this;
     }
 
@@ -52,22 +53,65 @@ public class CsGHtmlBuilder {
         return this;
     }
 
+    public CsGHtmlBuilder text(String text) {
+        html.append(text);
+        return this;
+    }
+
+    public CsGHtmlBuilder text(String text, String tag) {
+        html.append('<').append(tag).append('>').append(text).append("</").append(tag).append('>');
+        return this;
+    }
+
+    /**
+     * Use {@link CsGHtmlBuilder#toString()}, may not works
+     *
+     * @return
+     */
+    @Deprecated
     public String build() {
         StringBuilder result = new StringBuilder();
-        if (withHtmlTag) {
-            result.append("<html>");
-        }
-        if (withBodyTag) {
-            result.append("<body style=\"").append(bodyStyle.toString()).append("\">");
-        }
+        result.append("<html>");
+        result.append("<body style=\"").append(style.toString()).append("\">");
         result.append(html.toString());
-        if (withBodyTag) {
-            result.append("</body>");
-        }
-        if (withHtmlTag) {
-            result.append("</html>");
-        }
+        result.append("</body>");
+        result.append("</html>");
         return result.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("<html>");
+        result.append('<').append(mainTag).append(" style=\"").append(style.toString()).append("\">");
+        result.append(html.toString());
+        result.append("</").append(mainTag).append('>');
+        result.append("</html>");
+        return result.toString();
+    }
+
+    public static String createHtmlTable(String[] headers, String[][] items) {
+        final CsGHtmlBuilder table = new CsGHtmlBuilder("table");
+        table.addStyle("border-collapse", "collapse");
+        table.addStyle("border", "1px solid black");
+        table.addStyle("width", "100%");
+        final String borderStyle = " style=\"border: 1px solid black;\"";
+        table.text("<tr style=\"font-weight: bold;\">");
+        for (String header : headers) {
+            table.text("<th" + borderStyle + '>' + header + "</th>");
+        }
+        table.text("</tr>");
+        for (final String[] item : items) {
+            table.text("<tr style=\"font-weight: normal;\">");
+            for (final String aRow : item) {
+                table.text("<td" + borderStyle + ">");
+                table.text(aRow);
+                table.text("</td>");
+            }
+            table.text("</tr>");
+        }
+
+        return table.toString();
     }
 
 }
