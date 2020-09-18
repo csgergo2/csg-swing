@@ -92,15 +92,19 @@ public class CsGHtmlBuilder {
 
     public static String createHtmlTable(String[] headers, String[][] items) {
         final CsGHtmlBuilder table = new CsGHtmlBuilder("table");
-        table.text("<tr>");
+        table.addStyle("border-collapse", "collapse");
+        table.addStyle("border", "1px solid black");
+        table.addStyle("width", "100%");
+        final String borderStyle = " style=\"border: 1px solid black;\"";
+        table.text("<tr style=\"font-weight: bold;\">");
         for (String header : headers) {
-            table.text(header, "th");
+            table.text("<th" + borderStyle + '>' + header + "</th>");
         }
         table.text("</tr>");
         for (final String[] item : items) {
-            table.text("<tr>");
+            table.text("<tr style=\"font-weight: normal;\">");
             for (final String aRow : item) {
-                table.text("<td>");
+                table.text("<td" + borderStyle + ">");
                 table.text(aRow);
                 table.text("</td>");
             }
