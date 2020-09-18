@@ -21,7 +21,6 @@ public class CsGHtmlBuilder {
     public CsGHtmlBuilder(final CsGHtmlHeadBuilder headBuilder, final CsGHtmlBodyBuilder bodyBuilder) {
         this.headBuilder = headBuilder;
         this.bodyBuilder = bodyBuilder;
-        html.append("<!DOCTYPE html>");
         html.append("<html>");
     }
 
