@@ -13,8 +13,9 @@ public class CsGComboBox<E> extends JComboBox<E> {
         setName(name.name());
     }
 
-    public void removeAllAndAddNewItems(Iterable<E> items) {
+    public void reset(Iterable<E> items) {
         removeAllItems();
         items.forEach(this::addItem);
+        setSelectedIndex(getItemCount() - 1);
     }
 }
