@@ -6,6 +6,18 @@ public class CsGHtmlBuilder {
     private final CsGHtmlHeadBuilder headBuilder;
     private final CsGHtmlBodyBuilder bodyBuilder;
 
+    public CsGHtmlBuilder() {
+        this(new CsGHtmlHeadBuilder(), new CsGHtmlBodyBuilder());
+    }
+
+    public CsGHtmlBuilder(final CsGHtmlHeadBuilder headBuilder) {
+        this(headBuilder, new CsGHtmlBodyBuilder());
+    }
+
+    public CsGHtmlBuilder(final CsGHtmlBodyBuilder bodyBuilder) {
+        this(new CsGHtmlHeadBuilder(), bodyBuilder);
+    }
+
     public CsGHtmlBuilder(final CsGHtmlHeadBuilder headBuilder, final CsGHtmlBodyBuilder bodyBuilder) {
         this.headBuilder = headBuilder;
         this.bodyBuilder = bodyBuilder;
