@@ -12,4 +12,9 @@ public class CsGComboBox<E> extends JComboBox<E> {
         super(items);
         setName(name.name());
     }
+
+    public void removeAllAndAddNewItems(Iterable<E> items) {
+        removeAllItems();
+        items.forEach(this::addItem);
+    }
 }
