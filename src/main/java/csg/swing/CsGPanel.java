@@ -1,10 +1,12 @@
 package csg.swing;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.LayoutManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 public abstract class CsGPanel extends JPanel {
+    public static final Color DEFAULT_PANEL_COLOR = Color.decode("#e3d8b3");
 
     public CsGPanel(Enum<?> name, LayoutManager layout) {
         this(name, 0, 0, CsGFrameWindow.PREFERRED_WIDTH, CsGFrameWindow.PREFERRED_HEIGHT, layout);
@@ -15,7 +17,7 @@ public abstract class CsGPanel extends JPanel {
         setSize(width, height);
         setLocation(x, y);
         setLayout(layout);
-        setBackground(Color.decode("#e3d8b3"));
+        setBackground(DEFAULT_PANEL_COLOR);
         setVisible(false);
     }
 
