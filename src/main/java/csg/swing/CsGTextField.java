@@ -1,8 +1,8 @@
 package csg.swing;
 
-import java.awt.*;
+import java.awt.Toolkit;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -19,6 +19,10 @@ public class CsGTextField extends JTextField {
         if (onlyDigits) {
             ((AbstractDocument) getDocument()).setDocumentFilter(new DigitDocumentFilter());
         }
+    }
+
+    public int getTextAsInteger() throws NumberFormatException {
+        return Integer.parseInt(getText());
     }
 
     private static class DigitDocumentFilter extends DocumentFilter {

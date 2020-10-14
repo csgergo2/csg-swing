@@ -21,6 +21,10 @@ public class CsGTextArea extends JTextArea {
         }
     }
 
+    public int getTextAsInteger() throws NumberFormatException {
+        return Integer.parseInt(getText());
+    }
+
     private static class DigitDocumentFilter extends DocumentFilter {
 
         @Override
