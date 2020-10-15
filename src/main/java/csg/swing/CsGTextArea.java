@@ -21,8 +21,8 @@ public class CsGTextArea extends JTextArea {
         }
     }
 
-    public int getTextAsInteger() throws NumberFormatException {
-        return Integer.parseInt(getText());
+    public Integer getTextAsInteger() throws NumberFormatException {
+        return getText().isEmpty() ? null : Integer.parseInt(getText());
     }
 
     private static class DigitDocumentFilter extends DocumentFilter {
